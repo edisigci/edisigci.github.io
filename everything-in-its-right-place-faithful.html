@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Everything In Its Right Place — Faithful Loop</title>
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js"></script>
+  <style>
+    :root { --bg:#0e1116; --card:#171a21; --text:#e6e8eb; --muted:#93a1b0; --accent:#5da0ff; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; height: 100vh; display: grid; place-items: center; background: radial-gradient(80% 80% at 20% 20%, #1a2130, #0e1116);
+      color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    .card { width: min(680px, 92vw); background: var(--card); border-radius: 16px; padding: 20px 22px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    h1 { margin: 0 0 6px; font-weight: 600; letter-spacing: .2px; }
+    .sub { margin: 0 0 18px; color: var(--muted); font-size: .95rem; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    button {
+      background: var(--accent); color: #fff; border: none; padding: 10px 16px; border-radius: 12px; font-size: 1rem; cursor: pointer;
+      transition: transform .06s ease, filter .2s ease;
+    }
+    button:hover { filter: brightness(1.05); }
+    button:active { transform: translateY(1px); }
+    .knob { display:flex; align-items:center; gap:8px; }
+    input[type=range] { width: 180px; }
+    .chips { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { background:#0f1420; color:#cbd5e1; padding:6px 10px; border-radius:999px; font-size:.85rem; border:1px solid #1f2633; }
+    .footer { margin-top:12px; color:#9aa6b2; font-size:.85rem; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Everything In Its Right Place</h1>
+    <p class="sub">Faithful looping sketch — <span class="mono">C Phrygian</span>, inverted pedal on <span class="mono">C</span>, asymmetrical cycle (<span class="mono">≈10/4</span> feel).</p>
+    <div class="row">
+      <button id="play">▶ Play</button>
+      <div class="knob">
+        <label for="tempo">Tempo</label>
+        <input id="tempo" type="range" min="60" max="140" value="78" />
+        <span id="tempoVal">78 BPM</span>
+      </div>
+      <div class="knob">
+        <label for="wet">Reverb</label>
+        <input id="wet" type="range" min="0" max="100" value="35" />
+        <span id="wetVal">35%</span>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip">Chord cell: C → D♭maj7 → E♭6 (top note C)</span>
+      <span class="chip">Pad + detuned saw</span>
+      <span class="chip">Auto‑filter pulse</span>
+    </div>
+    <p class="footer">Tip: adjust tempo — some sources list <span class="mono">~124</span> BPM counted in smaller values; this sketch defaults to a slower feel.</p>
+  </div>
+
+  <script>
+    // ----- SYNTH ENGINE -----
+    const reverb = new Tone.Reverb({ decay: 7, preDelay: 0.05, wet: 0.35 }).toDestination();
+    const chorus = new Tone.Chorus(0.18, 1.5, 0.25).start();
+    const filter = new Tone.Filter(1800, "lowpass", -12);
+    const auto = new Tone.AutoFilter({ frequency: "2n", depth: 0.25 }).start();
+
+    const pad = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "sine" },
+      envelope: { attack: 0.8, decay: 0.4, sustain: 0.8, release: 3.5 }
+    });
+
+    const saw = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "sawtooth" },
+      detune: -8,
+      envelope: { attack: 0.3, decay: 0.6, sustain: 0.7, release: 2.8 }
+    });
+
+    const bass = new Tone.MonoSynth({
+      oscillator: { type: "triangle" },
+      envelope: { attack: 0.01, decay: 0.2, sustain: 0.6, release: 0.8 },
+      filter: { type: "lowpass", rolloff: -24, Q: 1.2, frequency: 200 }
+    });
+
+    // FX routing
+    pad.chain(chorus, filter, auto, reverb);
+    saw.chain(chorus, filter, auto, reverb);
+    bass.connect(reverb);
+
+    // ----- THEORY: C Phrygian cell with C on top -----
+    // C major triad + C (pedal); Db major + C (Dbmaj7); Eb major + C (Eb6)
+    const CHORDS = [
+      ["C3","E3","G3","C4","C5"],
+      ["Db3","F3","Ab3","C4","C5"],
+      ["Eb3","G3","Bb3","C4","C5"]
+    ];
+    const BASS = ["C2","Db2","Eb2"];
+
+    // ----- SEQUENCER -----
+    // We'll emulate a 10/4 feel as a 10‑step quarter‑note cycle: 6 quarters + 4 quarters.
+    let step = 0;
+    let playing = false;
+
+    function triggerChord(index, time) {
+      const chord = CHORDS[index];
+      pad.triggerAttackRelease(chord, "2n", time);   // half‑note pad
+      saw.triggerAttackRelease(chord, "4n", time);   // quarter pulses
+      bass.triggerAttackRelease(BASS[index], "2n", time);
+    }
+
+    const loop = new Tone.Loop((time) => {
+      // Map steps to chords across a 10‑beat cycle: C (steps 0‑3), Db (4‑6), Eb (7‑9)
+      if (step === 0) triggerChord(0, time);
+      if (step === 4) triggerChord(1, time);
+      if (step === 7) triggerChord(2, time);
+      step = (step + 1) % 10;
+    }, "4n"); // one quarter note per tick
+
+    // UI
+    const btn = document.getElementById("play");
+    const tempo = document.getElementById("tempo");
+    const tempoVal = document.getElementById("tempoVal");
+    const wet = document.getElementById("wet");
+    const wetVal = document.getElementById("wetVal");
+
+    tempo.addEventListener("input", e => {
+      Tone.Transport.bpm.value = +e.target.value;
+      tempoVal.textContent = `${+e.target.value} BPM`;
+    });
+    wet.addEventListener("input", e => {
+      const w = (+e.target.value)/100;
+      reverb.wet.value = w; wetVal.textContent = `${+e.target.value}%`;
+    });
+
+    btn.addEventListener("click", async () => {
+      await Tone.start();
+      Tone.Transport.bpm.value = +tempo.value;
+      if (!playing) {
+        step = 0;
+        loop.start(0);
+        Tone.Transport.start();
+        btn.textContent = "⏹ Stop";
+        playing = true;
+      } else {
+        Tone.Transport.stop();
+        Tone.Transport.cancel();
+        btn.textContent = "▶ Play";
+        playing = false;
+      }
+    });
+  </script>
+</body>
+</html>

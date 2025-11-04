@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Everything In Its Right Place – Ukulele Loop</title>
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: "Open Sans", sans-serif;
+      background: radial-gradient(circle at 20% 20%, #cfd9df, #e2ebf0);
+    }
+    h1 {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #2e7df6;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #1d5fd1;
+    }
+    footer {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Everything In Its Right Place</h1>
+  <button id="playButton">▶ Play</button>
+  <footer>Radiohead • simplified loop (C–Am–F–G)</footer>
+
+  <script>
+    const synth = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "sine" },
+      envelope: { attack: 0.5, release: 2 }
+    }).toDestination();
+
+    const reverb = new Tone.Reverb({
+      decay: 6,
+      wet: 0.4
+    }).toDestination();
+
+    synth.connect(reverb);
+
+    const chords = [
+      ["C4", "E4", "G4"],   // C
+      ["A3", "C4", "E4"],   // Am
+      ["F3", "A3", "C4"],   // F
+      ["G3", "B3", "D4"]    // G
+    ];
+
+    let playing = false;
+
+    document.getElementById("playButton").addEventListener("click", async () => {
+      await Tone.start();
+      if (!playing) {
+        Tone.Transport.scheduleRepeat(time => {
+          const chord = chords[Math.floor((Tone.Transport.seconds / 2) % chords.length)];
+          synth.triggerAttackRelease(chord, "2n", time);
+        }, "2n");
+        Tone.Transport.start();
+        playing = true;
+        document.getElementById("playButton").textContent = "⏹ Stop";
+      } else {
+        Tone.Transport.stop();
+        Tone.Transport.cancel();
+        playing = false;
+        document.getElementById("playButton").textContent = "▶ Play";
+      }
+    });
+  </script>
+</body>
+</html>

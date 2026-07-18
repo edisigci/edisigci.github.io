@@ -38,6 +38,33 @@
             border-radius: 16px;
             padding: 48px 44px;
         }
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .lang-switch {
+            display: inline-flex;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .lang-switch button {
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 7px 16px;
+            cursor: pointer;
+        }
+        .lang-switch button.active {
+            background: var(--ink);
+            color: #fff;
+        }
         header { margin-bottom: 8px; }
         h1 {
             font-size: 1.9rem;
@@ -69,13 +96,8 @@
             border-bottom: 1px solid var(--muted);
         }
         a:hover { border-bottom-color: var(--ink); }
-        .lang {
-            color: var(--muted);
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin: 0 0 28px;
-        }
+        [data-lang] { display: none; }
+        [data-lang].active { display: block; }
         footer {
             margin-top: 28px;
             text-align: center;
@@ -94,51 +116,84 @@
 <body>
     <main>
         <div class="card">
-            <header>
-                <h1>Oyon — Privacy Policy &amp; Support</h1>
-                <p class="updated">Last updated: 2026-07-18</p>
-                <p class="lang">English · <a href="#tr">Türkçe aşağıda</a></p>
-            </header>
+            <div class="topbar">
+                <div class="lang-switch" role="group" aria-label="Language">
+                    <button type="button" data-set="en" class="active">EN</button>
+                    <button type="button" data-set="tr">TR</button>
+                </div>
+            </div>
 
-            <h2>Privacy Policy</h2>
-            <p>Oyon is a minimalist iOS arcade game. <strong>Gameplay runs on your device.</strong></p>
-            <ul>
-                <li><strong>No account, no login.</strong> Oyon collects no name, email, contacts, photos, microphone, camera, or precise location.</li>
-                <li><strong>Anonymous, aggregate analytics &amp; crash diagnostics</strong> via Firebase (Google) — used only to balance the game and fix bugs. These contain no personal information and no account data.</li>
-                <li><strong>Ads.</strong> Oyon may show ads. It asks for App Tracking Transparency permission only for ad measurement and personalised advertising. If you decline, the app keeps working with non-personalised ads where available. You can change this any time in iOS Settings.</li>
-                <li><strong>Purchases</strong> are handled by Apple's App Store / StoreKit. Apple processes payment; Oyon never sees your payment details.</li>
-                <li><strong>Game Center.</strong> If you use leaderboards, your score is handled by Apple's Game Center.</li>
-            </ul>
-            <p>Because gameplay is on-device, deleting the app removes its local data. You can also reset locally stored analytics counters from the app's Settings screen.</p>
-            <p>Oyon is not designed to knowingly collect personal information from children.</p>
+            <section data-lang="en" class="active">
+                <header>
+                    <h1>Oyon — Privacy Policy &amp; Support</h1>
+                    <p class="updated">Last updated: 2026-07-18</p>
+                </header>
 
-            <h2>Support</h2>
-            <p>Questions, bugs, feature requests, or privacy/deletion requests:</p>
-            <ul>
-                <li><strong>Email:</strong> <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a></li>
-            </ul>
-            <p>We aim to reply within a few business days.</p>
+                <h2>Privacy Policy</h2>
+                <p>Oyon is a minimalist iOS arcade game. <strong>Gameplay runs on your device.</strong></p>
+                <ul>
+                    <li><strong>No account, no login.</strong> Oyon collects no name, email, contacts, photos, microphone, camera, or precise location.</li>
+                    <li><strong>Anonymous, aggregate analytics &amp; crash diagnostics</strong> via Firebase (Google) — used only to balance the game and fix bugs. These contain no personal information and no account data.</li>
+                    <li><strong>Ads.</strong> Oyon may show ads. It asks for App Tracking Transparency permission only for ad measurement and personalised advertising. If you decline, the app keeps working with non-personalised ads where available. You can change this any time in iOS Settings.</li>
+                    <li><strong>Purchases</strong> are handled by Apple's App Store / StoreKit. Apple processes payment; Oyon never sees your payment details.</li>
+                    <li><strong>Game Center.</strong> If you use leaderboards, your score is handled by Apple's Game Center.</li>
+                </ul>
+                <p>Because gameplay is on-device, deleting the app removes its local data. You can also reset locally stored analytics counters from the app's Settings screen.</p>
+                <p>Oyon is not designed to knowingly collect personal information from children.</p>
 
-            <h2 id="tr">Gizlilik Politikası (Türkçe)</h2>
-            <p>Oyon minimalist bir iOS arcade oyunudur. <strong>Oyun cihazınızda çalışır.</strong></p>
-            <ul>
-                <li><strong>Hesap yok, giriş yok.</strong> Oyon isim, e-posta, kişiler, fotoğraf, mikrofon, kamera veya kesin konum toplamaz.</li>
-                <li><strong>Anonim, toplu analiz &amp; çökme tanıları</strong> Firebase (Google) ile — yalnızca oyunu dengelemek ve hataları gidermek için. Kişisel bilgi veya hesap verisi içermez.</li>
-                <li><strong>Reklamlar.</strong> Oyon reklam gösterebilir. App Tracking Transparency iznini yalnızca reklam ölçümü ve kişiselleştirilmiş reklam için ister. İzin vermezseniz, mümkün olan yerlerde kişiselleştirilmemiş reklamlarla çalışır. Bunu istediğiniz zaman iOS Ayarlar'dan değiştirebilirsiniz.</li>
-                <li><strong>Satın almalar</strong> Apple App Store / StoreKit tarafından yürütülür. Ödemeyi Apple işler; Oyon ödeme bilgilerinizi görmez.</li>
-                <li><strong>Game Center.</strong> Lider tablolarını kullanırsanız skorunuz Apple Game Center tarafından yönetilir.</li>
-            </ul>
-            <p>Oyun cihazda çalıştığı için uygulamayı silmek yerel verileri kaldırır. Cihazda saklanan analiz sayaçlarını uygulamanın Ayarlar ekranından da sıfırlayabilirsiniz.</p>
-            <p>Oyon, çocuklardan bilerek kişisel bilgi toplamak üzere tasarlanmamıştır.</p>
+                <h2>Support</h2>
+                <p>Questions, bugs, feature requests, or privacy/deletion requests:</p>
+                <ul>
+                    <li><strong>Email:</strong> <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a></li>
+                </ul>
+                <p>We aim to reply within a few business days.</p>
+            </section>
 
-            <h2>Destek (Türkçe)</h2>
-            <p>Sorular, hatalar, öneriler veya gizlilik/silme talepleri:</p>
-            <ul>
-                <li><strong>E-posta:</strong> <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a></li>
-            </ul>
-            <p>Birkaç iş günü içinde yanıtlamayı hedefliyoruz.</p>
+            <section data-lang="tr">
+                <header>
+                    <h1>Oyon — Gizlilik &amp; Destek</h1>
+                    <p class="updated">Son güncelleme: 2026-07-18</p>
+                </header>
+
+                <h2>Gizlilik Politikası</h2>
+                <p>Oyon minimalist bir iOS arcade oyunudur. <strong>Oyun cihazınızda çalışır.</strong></p>
+                <ul>
+                    <li><strong>Hesap yok, giriş yok.</strong> Oyon isim, e-posta, kişiler, fotoğraf, mikrofon, kamera veya kesin konum toplamaz.</li>
+                    <li><strong>Anonim, toplu analiz &amp; çökme tanıları</strong> Firebase (Google) ile — yalnızca oyunu dengelemek ve hataları gidermek için. Kişisel bilgi veya hesap verisi içermez.</li>
+                    <li><strong>Reklamlar.</strong> Oyon reklam gösterebilir. App Tracking Transparency iznini yalnızca reklam ölçümü ve kişiselleştirilmiş reklam için ister. İzin vermezseniz, mümkün olan yerlerde kişiselleştirilmemiş reklamlarla çalışır. Bunu istediğiniz zaman iOS Ayarlar'dan değiştirebilirsiniz.</li>
+                    <li><strong>Satın almalar</strong> Apple App Store / StoreKit tarafından yürütülür. Ödemeyi Apple işler; Oyon ödeme bilgilerinizi görmez.</li>
+                    <li><strong>Game Center.</strong> Lider tablolarını kullanırsanız skorunuz Apple Game Center tarafından yönetilir.</li>
+                </ul>
+                <p>Oyun cihazda çalıştığı için uygulamayı silmek yerel verileri kaldırır. Cihazda saklanan analiz sayaçlarını uygulamanın Ayarlar ekranından da sıfırlayabilirsiniz.</p>
+                <p>Oyon, çocuklardan bilerek kişisel bilgi toplamak üzere tasarlanmamıştır.</p>
+
+                <h2>Destek</h2>
+                <p>Sorular, hatalar, öneriler veya gizlilik/silme talepleri:</p>
+                <ul>
+                    <li><strong>E-posta:</strong> <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a></li>
+                </ul>
+                <p>Birkaç iş günü içinde yanıtlamayı hedefliyoruz.</p>
+            </section>
         </div>
         <footer><a href="https://edisigci.com/">edisigci.com</a></footer>
     </main>
+
+    <script>
+        (function () {
+            var sections = document.querySelectorAll('[data-lang]');
+            var buttons = document.querySelectorAll('.lang-switch button');
+            function set(lang) {
+                sections.forEach(function (s) { s.classList.toggle('active', s.getAttribute('data-lang') === lang); });
+                buttons.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-set') === lang); });
+                document.documentElement.lang = lang;
+            }
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () { set(b.getAttribute('data-set')); });
+            });
+            // Default to Turkish for TR browsers, English otherwise.
+            var pref = (navigator.language || 'en').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+            set(pref);
+        })();
+    </script>
 </body>
 </html>

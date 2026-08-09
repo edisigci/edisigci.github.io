@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyon — Support</title>
+    <meta name="description" content="Oyon support: how to restore purchases, where progress is kept, how to reach us.">
+    <link rel="canonical" href="https://edisigci.com/oyon/support/">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f4f5;
+            --card: #ffffff;
+            --ink: #1c1c1e;
+            --muted: #6b6b70;
+            --line: #e6e6e8;
+        }
+        * { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            margin: 0;
+            padding: 48px 20px 96px;
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+        main { max-width: 680px; margin: 0 auto; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 48px 44px;
+        }
+        .topbar { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .lang-switch {
+            display: inline-flex;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .lang-switch button {
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 7px 16px;
+            cursor: pointer;
+        }
+        .lang-switch button.active { background: var(--ink); color: #fff; }
+        header { margin-bottom: 8px; }
+        h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: -0.01em; margin: 0 0 4px; }
+        h2 {
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 36px 0 10px;
+        }
+        h3 { font-size: 1rem; font-weight: 500; margin: 22px 0 4px; }
+        .updated { color: var(--muted); font-size: 0.85rem; margin: 0 0 8px; }
+        p { margin: 0 0 12px; }
+        ul { margin: 0 0 12px; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        a { color: var(--ink); border-bottom: 1px solid var(--line); text-decoration: none; }
+        .contact {
+            margin-top: 12px;
+            padding: 20px 22px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+        .contact a { font-weight: 500; }
+        [data-lang] { display: none; }
+        [data-lang].active { display: block; }
+        footer {
+            margin-top: 28px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+        }
+        footer a { border: none; color: var(--muted); }
+        @media (max-width: 520px) {
+            body { padding: 24px 14px 64px; }
+            .card { padding: 32px 24px; border-radius: 14px; }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="card">
+            <div class="topbar">
+                <div class="lang-switch" role="group" aria-label="Language">
+                    <button type="button" data-set="en" class="active">EN</button>
+                    <button type="button" data-set="tr">TR</button>
+                </div>
+            </div>
+
+            <section data-lang="en" class="active">
+                <header>
+                    <h1>Oyon — Support</h1>
+                    <p class="updated">Last updated: 2026-08-10</p>
+                </header>
+
+                <p>Oyon is a minimalist iOS arcade game: dial to match, release to
+                dissolve. Everything below is the short answer; if it is not here,
+                write and we will help.</p>
+
+                <div class="contact">
+                    <strong>Email:</strong>
+                    <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a><br>
+                    We aim to reply within a few business days. Telling us your
+                    device and iOS version makes it much faster.
+                </div>
+
+                <h2>Common questions</h2>
+
+                <h3>I bought a theme and it is not there</h3>
+                <p>Open <strong>Settings → Restore Purchases</strong>. Purchases are
+                tied to your Apple Account, so this brings them back on a new device
+                or after reinstalling. If it still does not appear, email us with the
+                Apple Account you bought it with.</p>
+
+                <h3>Where is my progress kept?</h3>
+                <p>On the device. Scores, medals, streaks and settings live in the
+                app itself, so deleting the app deletes them. Game Center keeps your
+                leaderboard scores separately, under your own Game Center account.</p>
+
+                <h3>The game is silent</h3>
+                <p>Oyon plays through the ring/silent switch on purpose — the sound is
+                half the game. Check <strong>Settings → Sound</strong> in the app, then
+                the volume while the game is open. If another app is holding the audio
+                session, closing it usually frees the sound.</p>
+
+                <h3>Daily challenge and reminders</h3>
+                <p>The daily challenge is the same set of targets for everyone, one
+                attempt per day. Reminders are off until you turn them on; the app asks
+                for notification permission only at that moment, and you can withdraw
+                it any time in iOS Settings.</p>
+
+                <h3>Turning analytics off</h3>
+                <p>In <strong>Settings → Privacy</strong>. Oyon shows no ads, has no
+                advertising SDK, and never asks to track you. See the
+                <a href="https://edisigci.com/oyon/privacy/">privacy policy</a> for
+                what is collected and why.</p>
+
+                <h3>Deleting your data</h3>
+                <p>Deleting the app removes everything stored on the device. For the
+                anonymous analytics and crash diagnostics, email us and we will have
+                them deleted.</p>
+
+                <h2>Accessibility</h2>
+                <p>The score, wave, magazine and lives are all exposed to VoiceOver, and
+                the claim and controls are reachable as buttons. If something is
+                unreadable or unreachable for you, tell us — that is a bug we will fix.</p>
+            </section>
+
+            <section data-lang="tr">
+                <header>
+                    <h1>Oyon — Destek</h1>
+                    <p class="updated">Son güncelleme: 2026-08-10</p>
+                </header>
+
+                <p>Oyon minimalist bir iOS arcade oyunudur: eşleştirmek için çevir,
+                eritmek için bırak. Aşağıdakiler kısa cevaplar; aradığın burada yoksa
+                yaz, yardımcı oluruz.</p>
+
+                <div class="contact">
+                    <strong>E-posta:</strong>
+                    <a href="mailto:edisigci@icloud.com">edisigci@icloud.com</a><br>
+                    Birkaç iş günü içinde yanıtlamayı hedefliyoruz. Cihazını ve iOS
+                    sürümünü yazarsan çok daha hızlı ilerler.
+                </div>
+
+                <h2>Sık sorulanlar</h2>
+
+                <h3>Tema satın aldım ama görünmüyor</h3>
+                <p><strong>Ayarlar → Satın Alımları Geri Yükle</strong>'yi aç. Satın
+                alımlar Apple Hesabına bağlıdır; yeni cihazda veya uygulamayı yeniden
+                kurduğunda bu adım onları geri getirir. Yine gelmezse, satın alırken
+                kullandığın Apple Hesabıyla bize yaz.</p>
+
+                <h3>İlerlemem nerede saklanıyor?</h3>
+                <p>Cihazda. Skorlar, madalyalar, seriler ve ayarlar uygulamanın
+                içinde durur; uygulamayı silmek bunları da siler. Lider tablosu
+                skorların ayrıca kendi Game Center hesabında tutulur.</p>
+
+                <h3>Ses gelmiyor</h3>
+                <p>Oyon bilerek sessiz/zil anahtarını aşarak çalar — ses oyunun yarısı.
+                Önce uygulamadaki <strong>Ayarlar → Ses</strong>'e, sonra oyun açıkken
+                ses seviyesine bak. Başka bir uygulama ses oturumunu tutuyorsa, onu
+                kapatmak genelde sesi serbest bırakır.</p>
+
+                <h3>Günlük meydan okuma ve hatırlatmalar</h3>
+                <p>Günlük meydan okuma herkes için aynı hedeflerdir, günde tek deneme.
+                Hatırlatmalar sen açana kadar kapalıdır; uygulama bildirim iznini
+                yalnızca o anda ister ve izni istediğin zaman iOS Ayarlar'dan geri
+                alabilirsin.</p>
+
+                <h3>Analizi kapatmak</h3>
+                <p><strong>Ayarlar → Gizlilik</strong> altından. Oyon reklam göstermez,
+                reklam SDK'sı içermez ve seni izlemek için izin istemez. Nelerin neden
+                toplandığı için
+                <a href="https://edisigci.com/oyon/privacy/">gizlilik politikasına</a>
+                bakabilirsin.</p>
+
+                <h3>Verilerini silmek</h3>
+                <p>Uygulamayı silmek cihazda saklanan her şeyi kaldırır. Anonim analiz
+                ve çökme tanıları için bize yaz, sildirelim.</p>
+
+                <h2>Erişilebilirlik</h2>
+                <p>Skor, dalga, şarjör ve canlar VoiceOver'a açıktır; ödül alma ve
+                kontroller düğme olarak erişilebilir. Senin için okunmayan ya da
+                erişilemeyen bir şey varsa söyle — bu bizim için giderilecek bir hatadır.</p>
+            </section>
+        </div>
+        <footer><a href="https://edisigci.com/">edisigci.com</a></footer>
+    </main>
+
+    <script>
+        (function () {
+            var sections = document.querySelectorAll('[data-lang]');
+            var buttons = document.querySelectorAll('.lang-switch button');
+            function set(lang) {
+                sections.forEach(function (s) {
+                    s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+                });
+                buttons.forEach(function (b) {
+                    b.classList.toggle('active', b.getAttribute('data-set') === lang);
+                });
+                document.documentElement.lang = lang;
+            }
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () { set(b.getAttribute('data-set')); });
+            });
+            if ((navigator.language || '').toLowerCase().indexOf('tr') === 0) { set('tr'); }
+        })();
+    </script>
+</body>
+</html>
